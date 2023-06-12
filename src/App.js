@@ -1,30 +1,23 @@
-import React, { useState } from 'react';
-import LeafletMap from './components/LeafletMap';
+import React from 'react';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'; // use HashRouter instead of BrowserRouter
 import TitleComponent from './components/Title';
-import SelectionBar from './components/SelectionBar';
 import FooterComponent from './components/Footer'; // import the FooterComponent
+import PollutantsComponent from './components/Pollutants';
+import TrafficComponent from './components/Traffic'; // import the TrafficComponent
 
 function App() {
-  const [selectedItem, setSelectedItem] = useState('');
-
-  const handleItemSelected = (selectedItem) => {
-    const imageUrl = getImageUrl(selectedItem);
-    setSelectedItem(imageUrl);
-  };
-  
-  const getImageUrl = (selectedItem) => {
-    return selectedItem;
-  };
-
-  const imageUrl = getImageUrl(selectedItem);
-
   return (
-    <div>
-      <TitleComponent />
-      <SelectionBar onItemSelected={handleItemSelected} />
-      <LeafletMap imageUrl={imageUrl} />
-      <FooterComponent /> {/* add the FooterComponent here */}
-    </div>
+    <Router>
+      <div>
+        <TitleComponent />
+        <Routes>
+          <Route path="/traffic" element={<TrafficComponent />} />
+          <Route path="/pollutants" element={<PollutantsComponent />} />
+          <Route path="/" element={<PollutantsComponent />} />
+        </Routes>
+        <FooterComponent />
+      </div>
+    </Router>
   );
 }
 
